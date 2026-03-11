@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filmový večer – hlasování</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #171a21;
+      --muted: #9aa4b2;
+      --text: #f3f4f6;
+      --line: #2a3040;
+      --accent: #e11d48;
+      --accent-2: #f59e0b;
+      --ok: #10b981;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #0b0d12 0%, #111827 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      color: var(--accent-2);
+      font-size: 13px;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin: 0 0 10px;
+      line-height: 1.1;
+    }
+
+    .sub {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .info-bar {
+      margin: 24px auto 0;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #d1d5db;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .card {
+      background: rgba(23, 26, 33, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      object-fit: cover;
+      background: #0b0d12;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .card h2 {
+      font-size: 22px;
+      margin: 14px 0 6px;
+    }
+
+    .meta {
+      color: var(--accent-2);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      color: #d1d5db;
+      font-size: 15px;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .vote-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(90deg, var(--accent), #fb7185);
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .vote-btn:hover { transform: translateY(-1px); }
+    .vote-btn:active { transform: translateY(0); opacity: .94; }
+
+    .results {
+      margin-top: 34px;
+      background: rgba(23, 26, 33, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .results h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    .result-row { margin-bottom: 14px; }
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #e5e7eb;
+    }
+
+    .bar {
+      width: 100%;
+      height: 12px;
+      background: #0f172a;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--ok), #34d399);
+      transition: width .35s ease;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    code.inline {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">🎬 Filmový klub • měsíční hlasování</div>
+      <h1>Jaký film dáme příště?</h1>
+      <p class="sub">
+        Klikněte na film, který chcete vidět. Každý může hlasovat jednou na tomto zařízení.
+        U každého filmu je krátký popis a odkaz na ČSFD.
+      </p>
+      <div class="info-bar">
+        <div class="chip">📅 Pátek 29. března</div>
+        <div class="chip">👥 Skupina: 15 lidí</div>
+        <div class="chip">⏳ Hlasování do čtvrtka 20:00</div>
+      </div>
+    </section>
+
+    <section class="grid" id="movieGrid"></section>
+
+    <section class="results">
+      <h3>Průběžné výsledky</h3>
+      <div id="resultsBox"></div>
+      <div class="note">
+        Tahle verze ukládá hlasy jen lokálně v prohlížeči pomocí <code class="inline">localStorage</code>.
+        Pro ostré používání ve skupině je ideální napojit hlasování třeba na Google Form, Supabase nebo Firebase.
+      </div>
+    </section>
+
+    <div class="footer">
+      Vytvořeno jako jednoduchý test pro sdílení přes GitHub Pages a WhatsApp.
+    </div>
+  </div>
+
+  <script>
+    const storageKey = 'filmovy-vecer-brezen-2026';
+    const voteKey = 'filmovy-vecer-brezen-2026-my-vote';
+
+    const movies = [
+      {
+        id: 'lighthouse',
+        title: 'The Lighthouse',
+        meta: '2019 • psychologický horor • Robert Eggers',
+        desc: 'Dva muži, jeden maják, izolace, šílenství a pomalu houstnoucí paranoická atmosféra.',
+        csfd: 'https://www.csfd.cz/film/637890-the-lighthouse/prehled/',
+        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80'
+      },
+      {
+        id: 'silence',
+        title: 'Silence',
+        meta: '2016 • historické drama • Martin Scorsese',
+        desc: 'Tíživé a hluboké drama o víře, pochybnostech, utrpení a mlčení Boha.',
+        csfd: 'https://www.csfd.cz/film/358557-mlceni/prehled/',
+        image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80'
+      },
+      {
+        id: 'blood',
+        title: 'There Will Be Blood',
+        meta: '2007 • epické drama • Paul Thomas Anderson',
+        desc: 'Temná studie moci, ambice a lidské chamtivosti s ikonickým Danielem Day-Lewisem.',
+        csfd: 'https://www.csfd.cz/film/234143-az-na-krev/prehled/',
+        image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80'
+      },
+      {
+        id: 'tree',
+        title: 'The Tree of Life',
+        meta: '2011 • poetické drama • Terrence Malick',
+        desc: 'Filmová meditace o rodině, stvoření, paměti a smyslu lidského života.',
+        csfd: 'https://www.csfd.cz/film/257733-strom-zivota/prehled/',
+        image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=1200&q=80'
+      }
+    ];
+
+    function getVotes() {
+      const raw = localStorage.getItem(storageKey);
+      if (raw) return JSON.parse(raw);
+      const initial = {};
+      movies.forEach(m => initial[m.id] = 0);
+      localStorage.setItem(storageKey, JSON.stringify(initial));
+      return initial;
+    }
+
+    function setVotes(votes) {
+      localStorage.setItem(storageKey, JSON.stringify(votes));
+    }
+
+    function getMyVote() {
+      return localStorage.getItem(voteKey);
+    }
+
+    function setMyVote(movieId) {
+      localStorage.setItem(voteKey, movieId);
+    }
+
+    function renderMovies() {
+      const container = document.getElementById('movieGrid');
+      const myVote = getMyVote();
+      container.innerHTML = '';
+
+      movies.forEach(movie => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <img class="poster" src="${movie.image}" alt="${movie.title}">
+          <h2>${movie.title}</h2>
+          <div class="meta">${movie.meta}</div>
+          <div class="desc">${movie.desc}</div>
+          <div class="links">
+            <a class="link-btn" href="${movie.csfd}" target="_blank" rel="noopener noreferrer">ČSFD</a>
+          </div>
+          <button class="vote-btn" ${myVote ? 'disabled' : ''}>
+            ${myVote === movie.id ? '✅ Hlasováno pro tento film' : myVote ? 'Hlas už byl odeslán' : 'Hlasovat pro tento film'}
+          </button>
+        `;
+
+        const btn = card.querySelector('button');
+        if (!myVote) {
+          btn.addEventListener('click', () => vote(movie.id));
+        } else {
+          btn.style.opacity = myVote === movie.id ? '1' : '.55';
+          btn.style.cursor = 'default';
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function vote(movieId) {
+      const myVote = getMyVote();
+      if (myVote) return;
+      const votes = getVotes();
+      votes[movieId] = (votes[movieId] || 0) + 1;
+      setVotes(votes);
+      setMyVote(movieId);
+      renderMovies();
+      renderResults();
+    }
+
+    function renderResults() {
+      const votes = getVotes();
+      const total = Object.values(votes).reduce((a, b) => a + b, 0);
+      const box = document.getElementById('resultsBox');
+      box.innerHTML = '';
+
+      movies.forEach(movie => {
+        const count = votes[movie.id] || 0;
+        const percent = total ? Math.round((count / total) * 100) : 0;
+        const row = document.createElement('div');
+        row.className = 'result-row';
+        row.innerHTML = `
+          <div class="result-head">
+            <span>${movie.title}</span>
+            <strong>${count} hlasů • ${percent}%</strong>
+          </div>
+          <div class="bar"><span style="width:${percent}%"></span></div>
+        `;
+        box.appendChild(row);
+      });
+    }
+
+    renderMovies();
+    renderResults();
+  </script>
+</body>
+</html>
