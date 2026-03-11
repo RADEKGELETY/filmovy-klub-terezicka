@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filmový večer – hlasování</title>
+  <title>Předvelikonoční drama – hlasování</title>
   <style>
     :root {
       --bg: #0f1115;
@@ -223,16 +223,15 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <div class="eyebrow">🎬 Filmový klub • měsíční hlasování</div>
-      <h1>Jaký film dáme příště?</h1>
+      <div class="eyebrow">🎬 Předvelikonoční filmový večer</div>
+      <h1>PŘEDVELIKONOČNÍ DRAMA</h1>
       <p class="sub">
-        Klikněte na film, který chcete vidět. Každý může hlasovat jednou na tomto zařízení.
-        U každého filmu je krátký popis a odkaz na ČSFD.
+        Jakým filmem odstartujeme Velikonoce? Klikněte na svého favorita. U každého filmu je krátký popis a odkaz na ČSFD.
       </p>
       <div class="info-bar">
-        <div class="chip">📅 Pátek 29. března</div>
+        <div class="chip">📅 Úterý 31. 3. v 19:30</div>
         <div class="chip">👥 Skupina: 15 lidí</div>
-        <div class="chip">⏳ Hlasování do čtvrtka 20:00</div>
+        <div class="chip">⏳ Hlasování do neděle</div>
       </div>
     </section>
 
@@ -253,41 +252,41 @@
   </div>
 
   <script>
-    const storageKey = 'filmovy-vecer-brezen-2026';
-    const voteKey = 'filmovy-vecer-brezen-2026-my-vote';
+    const storageKey = 'predvelikonocni-drama-2026';
+    const voteKey = 'predvelikonocni-drama-2026-my-vote';
 
     const movies = [
       {
-        id: 'lighthouse',
-        title: 'The Lighthouse',
-        meta: '2019 • psychologický horor • Robert Eggers',
-        desc: 'Dva muži, jeden maják, izolace, šílenství a pomalu houstnoucí paranoická atmosféra.',
-        csfd: 'https://www.csfd.cz/film/637890-the-lighthouse/prehled/',
-        image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80'
+        id: 'mlceni',
+        title: 'Mlčení',
+        meta: 'historické drama • duchovní téma',
+        desc: 'Silný příběh o víře, pochybnostech, utrpení a hledání Boha v tichu i temnotě.',
+        csfd: 'https://www.csfd.cz/film/227578-mlceni/prehled/',
+        image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'
       },
       {
-        id: 'silence',
-        title: 'Silence',
-        meta: '2016 • historické drama • Martin Scorsese',
-        desc: 'Tíživé a hluboké drama o víře, pochybnostech, utrpení a mlčení Boha.',
-        csfd: 'https://www.csfd.cz/film/358557-mlceni/prehled/',
-        image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=1200&q=80'
+        id: 'mise',
+        title: 'Mise',
+        meta: 'historické drama • duchovní výprava',
+        desc: 'Klasický film o misiích, svědomí, oběti a střetu evangelia s mocí a násilím.',
+        csfd: 'https://www.csfd.cz/film/4863-mise/prehled/',
+        image: 'https://images.unsplash.com/photo-1514894786526-47adf5f1f7d0?auto=format&fit=crop&w=1200&q=80'
       },
       {
-        id: 'blood',
-        title: 'There Will Be Blood',
-        meta: '2007 • epické drama • Paul Thomas Anderson',
-        desc: 'Temná studie moci, ambice a lidské chamtivosti s ikonickým Danielem Day-Lewisem.',
-        csfd: 'https://www.csfd.cz/film/234143-az-na-krev/prehled/',
-        image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80'
+        id: 'posledni-pokuseni',
+        title: 'Poslední pokušení Krista',
+        meta: 'biblické drama • Martin Scorsese',
+        desc: 'Provokativní a hluboké zpracování Kristova lidství, pokušení a cesty k oběti.',
+        csfd: 'https://www.csfd.cz/film/8251-posledni-pokuseni-krista/prehled/',
+        image: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1200&q=80'
       },
       {
-        id: 'tree',
-        title: 'The Tree of Life',
-        meta: '2011 • poetické drama • Terrence Malick',
-        desc: 'Filmová meditace o rodině, stvoření, paměti a smyslu lidského života.',
-        csfd: 'https://www.csfd.cz/film/257733-strom-zivota/prehled/',
-        image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=1200&q=80'
+        id: 'umuceni-krista',
+        title: 'Umučení Krista',
+        meta: 'biblické drama • Mel Gibson',
+        desc: 'Intenzivní, syrové a velmi silné zobrazení posledních hodin Ježíšova utrpení.',
+        csfd: 'https://www.csfd.cz/film/70199-umuceni-krista/prehled/',
+        image: 'https://images.unsplash.com/photo-1505685296765-3a2736de412f?auto=format&fit=crop&w=1200&q=80'
       }
     ];
 
