@@ -232,6 +232,7 @@
         <div class="chip">📅 Úterý 31. 3. v 19:30</div>
         <div class="chip">👥 Skupina: 15 lidí</div>
         <div class="chip">⏳ Hlasování do neděle</div>
+        <div class="chip">🎞️ 3 filmové možnosti</div>
       </div>
     </section>
 
@@ -241,8 +242,9 @@
       <h3>Průběžné výsledky</h3>
       <div id="resultsBox"></div>
       <div class="note">
-        Tahle verze ukládá hlasy jen lokálně v prohlížeči pomocí <code class="inline">localStorage</code>.
-        Pro ostré používání ve skupině je ideální napojit hlasování třeba na Google Form, Supabase nebo Firebase.
+        Finální verze je připravená pro vlastní lokální obrázky v adresáři <code class="inline">images</code>.
+        Nahraj do repozitáře soubory <code class="inline">mlceni.jpg</code>, <code class="inline">mise.jpg</code>, <code class="inline">posledni-pokuseni-krista.jpg</code>
+        a volitelně <code class="inline">placeholder.jpg</code> jako záložní náhled.
       </div>
     </section>
 
@@ -262,7 +264,7 @@
         meta: 'historické drama • duchovní téma',
         desc: 'Silný příběh o víře, pochybnostech, utrpení a hledání Boha v tichu i temnotě.',
         csfd: 'https://www.csfd.cz/film/227578-mlceni/prehled/',
-        image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80'
+        image: 'images/mlceni.jpg'
       },
       {
         id: 'mise',
@@ -270,7 +272,7 @@
         meta: 'historické drama • duchovní výprava',
         desc: 'Klasický film o misiích, svědomí, oběti a střetu evangelia s mocí a násilím.',
         csfd: 'https://www.csfd.cz/film/4863-mise/prehled/',
-        image: 'https://images.unsplash.com/photo-1514894786526-47adf5f1f7d0?auto=format&fit=crop&w=1200&q=80'
+        image: 'images/mise.jpg'
       },
       {
         id: 'posledni-pokuseni',
@@ -278,15 +280,8 @@
         meta: 'biblické drama • Martin Scorsese',
         desc: 'Provokativní a hluboké zpracování Kristova lidství, pokušení a cesty k oběti.',
         csfd: 'https://www.csfd.cz/film/8251-posledni-pokuseni-krista/prehled/',
-        image: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1200&q=80'
+        image: 'images/posledni-pokuseni-krista.jpg'
       },
-      {
-        id: 'umuceni-krista',
-        title: 'Umučení Krista',
-        meta: 'biblické drama • Mel Gibson',
-        desc: 'Intenzivní, syrové a velmi silné zobrazení posledních hodin Ježíšova utrpení.',
-        csfd: 'https://www.csfd.cz/film/70199-umuceni-krista/prehled/',
-        image: 'https://images.unsplash.com/photo-1505685296765-3a2736de412f?auto=format&fit=crop&w=1200&q=80'
       }
     ];
 
@@ -320,7 +315,7 @@
         const card = document.createElement('article');
         card.className = 'card';
         card.innerHTML = `
-          <img class="poster" src="${movie.image}" alt="${movie.title}">
+          <img class="poster" src="${movie.image}" alt="${movie.title}" onerror="this.onerror=null;this.src='images/placeholder.jpg';">
           <h2>${movie.title}</h2>
           <div class="meta">${movie.meta}</div>
           <div class="desc">${movie.desc}</div>
