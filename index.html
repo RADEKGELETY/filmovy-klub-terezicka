@@ -7,107 +7,191 @@
   <style>
     :root {
       --bg: #0f1115;
-      --card: #171a21;
-      --muted: #9aa4b2;
+      --bg-2: #111827;
+      --card: rgba(23, 26, 33, 0.92);
+      --muted: #a7b0bd;
       --text: #f3f4f6;
       --line: #2a3040;
-      --accent: #e11d48;
-      --accent-2: #f59e0b;
+      --accent: #d4a017;
+      --accent-2: #f5d76e;
       --ok: #10b981;
+      --shadow: 0 16px 40px rgba(0,0,0,0.35);
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #0b0d12 0%, #111827 100%);
+      background: linear-gradient(180deg, #0b0d12 0%, #10141d 45%, #111827 100%);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
+    a { color: inherit; }
+
     .wrap {
-      max-width: 920px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 32px 16px 64px;
+      padding: 0 16px 64px;
     }
 
     .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0 0 28px 28px;
+      min-height: 72vh;
+      display: flex;
+      align-items: end;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 45%, rgba(7,10,15,0.96) 100%),
+        linear-gradient(90deg, rgba(13,16,23,0.85) 0%, rgba(13,16,23,0.45) 50%, rgba(13,16,23,0.82) 100%),
+        url('mlceni.jpg') left center / cover no-repeat,
+        url('mise.jpg') center center / cover no-repeat,
+        url('posledni-pokuseni-krista.jpg') right center / cover no-repeat;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(0,0,0,0.45) 0%,
+          rgba(0,0,0,0.12) 20%,
+          rgba(0,0,0,0.12) 33%,
+          rgba(0,0,0,0.48) 50%,
+          rgba(0,0,0,0.12) 67%,
+          rgba(0,0,0,0.12) 80%,
+          rgba(0,0,0,0.45) 100%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(245,215,110,0.18), transparent 35%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 56px 22px 34px;
       text-align: center;
-      margin-bottom: 28px;
     }
 
     .eyebrow {
       display: inline-block;
-      padding: 6px 10px;
-      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 14px;
+      padding: 7px 12px;
       border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
       color: var(--accent-2);
       font-size: 13px;
-      margin-bottom: 12px;
-      background: rgba(255,255,255,0.03);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
     }
 
     h1 {
-      font-size: clamp(30px, 5vw, 48px);
-      margin: 0 0 10px;
-      line-height: 1.1;
+      margin: 0;
+      font-size: clamp(36px, 7vw, 74px);
+      line-height: 0.96;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.45);
     }
 
     .sub {
       max-width: 760px;
-      margin: 0 auto;
-      color: var(--muted);
-      font-size: 17px;
+      margin: 16px auto 0;
+      color: #e5e7eb;
+      font-size: clamp(17px, 2vw, 20px);
+      text-shadow: 0 4px 18px rgba(0,0,0,0.45);
     }
 
     .info-bar {
       margin: 24px auto 0;
-      display: inline-flex;
+      display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
     }
 
     .chip {
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 10px 14px;
       font-size: 14px;
-      color: #d1d5db;
-      background: rgba(255,255,255,0.03);
+      color: #f3f4f6;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .section-title {
+      margin: 34px 0 8px;
+      font-size: 28px;
+    }
+
+    .section-text {
+      margin: 0 0 22px;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 16px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 34px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      background: rgba(23, 26, 33, 0.92);
+      background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 22px;
+      border-radius: 24px;
       padding: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
       min-height: 100%;
     }
 
+    .poster-link {
+      display: block;
+      text-decoration: none;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
     .poster {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 16px;
+      aspect-ratio: 2 / 3;
+      border-radius: 18px;
       object-fit: cover;
       background: #0b0d12;
       border: 1px solid rgba(255,255,255,0.06);
+      transition: transform .22s ease, filter .22s ease;
+      display: block;
+    }
+
+    .poster-link:hover .poster {
+      transform: scale(1.02);
+      filter: brightness(1.05);
     }
 
     .card h2 {
-      font-size: 22px;
-      margin: 14px 0 6px;
+      font-size: 24px;
+      margin: 16px 0 6px;
+      line-height: 1.15;
     }
 
     .meta {
@@ -140,7 +224,13 @@
       border-radius: 12px;
       padding: 10px 12px;
       font-size: 14px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.04);
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.08);
     }
 
     .vote-btn {
@@ -150,35 +240,37 @@
       padding: 14px 16px;
       font-size: 15px;
       font-weight: 700;
-      color: white;
+      color: #111827;
       cursor: pointer;
-      background: linear-gradient(90deg, var(--accent), #fb7185);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
       transition: transform .15s ease, opacity .15s ease;
     }
 
     .vote-btn:hover { transform: translateY(-1px); }
-    .vote-btn:active { transform: translateY(0); opacity: .94; }
+    .vote-btn:active { transform: translateY(0); opacity: .95; }
 
     .results {
-      margin-top: 34px;
-      background: rgba(23, 26, 33, 0.92);
+      margin-top: 32px;
+      background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 20px;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
     }
 
     .results h3 {
       margin: 0 0 14px;
-      font-size: 22px;
+      font-size: 24px;
     }
 
-    .result-row { margin-bottom: 14px; }
+    .result-row { margin-bottom: 16px; }
+
     .result-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
       font-size: 14px;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       color: #e5e7eb;
     }
 
@@ -195,7 +287,7 @@
       display: block;
       height: 100%;
       width: 0;
-      background: linear-gradient(90deg, var(--ok), #34d399);
+      background: linear-gradient(90deg, #10b981, #34d399);
       transition: width .35s ease;
     }
 
@@ -205,36 +297,59 @@
       font-size: 14px;
     }
 
-    .footer {
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-
     code.inline {
       background: rgba(255,255,255,0.06);
       padding: 2px 6px;
       border-radius: 8px;
       font-size: 13px;
     }
+
+    .footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        min-height: 64vh;
+        border-radius: 0 0 22px 22px;
+        background-position: center center, center center, center center, center center, center center;
+      }
+
+      .hero-content {
+        padding: 42px 16px 26px;
+      }
+
+      .section-title {
+        margin-top: 28px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
-      <div class="eyebrow">🎬 Předvelikonoční filmový večer</div>
-      <h1>PŘEDVELIKONOČNÍ DRAMA</h1>
-      <p class="sub">
-        Jakým filmem odstartujeme Velikonoce? Klikněte na svého favorita. U každého filmu je krátký popis a odkaz na ČSFD.
-      </p>
-      <div class="info-bar">
-        <div class="chip">📅 Úterý 31. 3. v 19:30</div>
-        <div class="chip">👥 Skupina: 15 lidí</div>
-        <div class="chip">⏳ Hlasování do neděle</div>
-        <div class="chip">🎞️ 3 filmové možnosti</div>
+      <div class="hero-content">
+        <div class="eyebrow">🎬 Předvelikonoční filmový večer</div>
+        <h1>PŘEDVELIKONOČNÍ<br>DRAMA</h1>
+        <p class="sub">
+          Jakým filmem odstartujeme Velikonoce? Vyberte svého favorita, otevřete si trailer kliknutím na plakát a mrkněte i na ČSFD.
+        </p>
+        <div class="info-bar">
+          <div class="chip">📍 Knihovna u Terezičky</div>
+          <div class="chip">📅 Úterý 31. 3. v 19:30</div>
+          <div class="chip">⏳ Hlasování do neděle</div>
+          <div class="chip">🎞️ 3 filmové možnosti</div>
+        </div>
       </div>
     </section>
+
+    <h2 class="section-title">Vyberte film</h2>
+    <p class="section-text">
+      Každý může hlasovat jednou na tomto zařízení. Kliknutí na plakát otevře trailer v novém okně.
+    </p>
 
     <section class="grid" id="movieGrid"></section>
 
@@ -242,14 +357,12 @@
       <h3>Průběžné výsledky</h3>
       <div id="resultsBox"></div>
       <div class="note">
-        Finální verze je připravená pro vlastní lokální obrázky v adresáři <code class="inline">images</code>.
-        Nahraj do repozitáře soubory <code class="inline">mlceni.jpg</code>, <code class="inline">mise.jpg</code>, <code class="inline">posledni-pokuseni-krista.jpg</code>
-        a volitelně <code class="inline">placeholder.jpg</code> jako záložní náhled.
+        Tahle verze ukládá hlasy lokálně v prohlížeči pomocí <code class="inline">localStorage</code>. Pro společné ostré hlasování celé skupiny by bylo potřeba napojení na formulář nebo databázi.
       </div>
     </section>
 
     <div class="footer">
-      Vytvořeno jako jednoduchý test pro sdílení přes GitHub Pages a WhatsApp.
+      Předvelikonoční drama • Knihovna u Terezičky
     </div>
   </div>
 
@@ -261,18 +374,20 @@
       {
         id: 'mlceni',
         title: 'Mlčení',
-        meta: 'historické drama • duchovní téma',
+        meta: 'historické drama • Martin Scorsese',
         desc: 'Silný příběh o víře, pochybnostech, utrpení a hledání Boha v tichu i temnotě.',
         csfd: 'https://www.csfd.cz/film/227578-mlceni/prehled/',
-        image: 'images/mlceni.jpg'
+        trailer: 'https://www.youtube.com/watch?v=IqrgxZLd_gE',
+        image: 'mlceni.jpg'
       },
       {
         id: 'mise',
         title: 'Mise',
-        meta: 'historické drama • duchovní výprava',
+        meta: 'historické drama • Roland Joffé',
         desc: 'Klasický film o misiích, svědomí, oběti a střetu evangelia s mocí a násilím.',
         csfd: 'https://www.csfd.cz/film/4863-mise/prehled/',
-        image: 'images/mise.jpg'
+        trailer: 'https://www.youtube.com/watch?v=GDdU8gqQO6U',
+        image: 'mise.jpg'
       },
       {
         id: 'posledni-pokuseni',
@@ -280,8 +395,8 @@
         meta: 'biblické drama • Martin Scorsese',
         desc: 'Provokativní a hluboké zpracování Kristova lidství, pokušení a cesty k oběti.',
         csfd: 'https://www.csfd.cz/film/8251-posledni-pokuseni-krista/prehled/',
-        image: 'images/posledni-pokuseni-krista.jpg'
-      },
+        trailer: 'https://www.youtube.com/watch?v=SqR0p3aY8G8',
+        image: 'posledni-pokuseni-krista.jpg'
       }
     ];
 
@@ -315,11 +430,14 @@
         const card = document.createElement('article');
         card.className = 'card';
         card.innerHTML = `
-          <img class="poster" src="${movie.image}" alt="${movie.title}" onerror="this.onerror=null;this.src='images/placeholder.jpg';">
+          <a class="poster-link" href="${movie.trailer}" target="_blank" rel="noopener noreferrer" aria-label="Otevřít trailer filmu ${movie.title}">
+            <img class="poster" src="${movie.image}" alt="Plakát filmu ${movie.title}">
+          </a>
           <h2>${movie.title}</h2>
           <div class="meta">${movie.meta}</div>
           <div class="desc">${movie.desc}</div>
           <div class="links">
+            <a class="link-btn" href="${movie.trailer}" target="_blank" rel="noopener noreferrer">Trailer</a>
             <a class="link-btn" href="${movie.csfd}" target="_blank" rel="noopener noreferrer">ČSFD</a>
           </div>
           <button class="vote-btn" ${myVote ? 'disabled' : ''}>
