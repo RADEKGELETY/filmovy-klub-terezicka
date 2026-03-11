@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Předvelikonoční drama – hlasování</title>
+  <title>Velikonoční drama – hlasování</title>
   <style>
     :root {
       --card: rgba(23, 26, 33, 0.92);
@@ -366,14 +366,16 @@
       .section-title {
         margin-top: 28px;
       }
-
-      .rating-badge {
-        top: 10px;
-        right: 10px;
-        font-size: 12px;
-        padding: 7px 9px;
+      @media (max-width: 600px) {
+        .rating-badge {
+          bottom: 10px;
+          right: 10px;
+          font-size: 12px;
+          padding: 6px 10px;
+          max-width: 70%;
+          white-space: nowrap;
+        }
       }
-    }
   </style>
 </head>
 <body>
@@ -381,7 +383,7 @@
     <section class="hero">
       <div class="hero-content">
         <div class="eyebrow">🎬 Filmový večer u Terezičky</div>
-        <h1>PŘEDVELIKONOČNÍ<br>DRAMA</h1>
+        <h1>VELIKONOČNÍ<br>DRAMA</h1>
         <p class="sub">
           Jakým filmem odstartujeme Velikonoce? Vyberte svého favorita, pusťe si trailer nebo mrkněte na ČSFD.
         </p>
