@@ -421,195 +421,207 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    const SUPABASE_URL = 'https://rmipckhvniardmvribnr.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtaXBja2h2bmlhcmRtdnJpYm5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNDQ4NjcsImV4cCI6MjA4ODgyMDg2N30.rWn9OcbDOIxHT5RbhYicxH2JpPHgsMnfRyvlgrZrzdw';
+    document.addEventListener('DOMContentLoaded', () => {
+      const SUPABASE_URL = 'DOPLN_SUPABASE_URL';
+      const SUPABASE_ANON_KEY = 'DOPLN_SUPABASE_ANON_KEY';
+      const storageKey = 'predvelikonocni-drama-2026-my-vote';
 
-    const storageKey = 'predvelikonocni-drama-2026-my-vote';
-
-    const movies = [
-      {
-        id: 'mlceni',
-        title: 'Mlčení',
-        meta: 'historické drama • Martin Scorsese',
-        rating: '76 % ČSFD',
-        desc: 'Silný příběh o víře, pochybnostech, utrpení a hledání Boha v tichu i temnotě.',
-        csfd: 'https://www.csfd.cz/film/227578-mlceni/prehled/',
-        trailer: 'https://www.youtube.com/watch?v=IqrgxZLd_gE',
-        image: 'mlceni.jpg'
-      },
-      {
-        id: 'mise',
-        title: 'Mise',
-        meta: 'historické drama • Roland Joffé',
-        rating: '86 % ČSFD',
-        desc: 'Klasický film o misiích, svědomí, oběti a střetu evangelia s mocí a násilím.',
-        csfd: 'https://www.csfd.cz/film/4863-mise/prehled/',
-        trailer: 'https://www.youtube.com/watch?v=GDdU8gqQO6U',
-        image: 'mise.jpg'
-      },
-      {
-        id: 'posledni-pokuseni',
-        title: 'Poslední pokušení Krista',
-        meta: 'biblické drama • Martin Scorsese',
-        rating: '74 % ČSFD',
-        desc: 'Provokativní a hluboké zpracování Kristova lidství, pokušení a cesty k oběti.',
-        csfd: 'https://www.csfd.cz/film/8251-posledni-pokuseni-krista/prehled/',
-        trailer: 'https://www.youtube.com/watch?v=LAST_TEMPTATION_TRAILER',
-        image: 'posledni-pokuseni-krista.jpg'
-      }
-    ];
-
-    const statusBox = document.getElementById('statusBox');
-    const movieGrid = document.getElementById('movieGrid');
-    const resultsBox = document.getElementById('resultsBox');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const resetVoteBtn = document.getElementById('resetVoteBtn');
-
-    let supabase = null;
-
-    function setStatus(message, type = '') {
-      statusBox.textContent = message;
-      statusBox.className = 'status' + (type ? ' ' + type : '');
-    }
-
-    function getMyVote() {
-      return localStorage.getItem(storageKey);
-    }
-
-    function setMyVote(movieId) {
-      localStorage.setItem(storageKey, movieId);
-    }
-
-    function clearMyVote() {
-      localStorage.removeItem(storageKey);
-    }
-
-    function renderMovies() {
-      const myVote = getMyVote();
-      movieGrid.innerHTML = '';
-
-      movies.forEach(movie => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <a class="poster-link" href="${movie.trailer}" target="_blank" rel="noopener noreferrer" aria-label="Otevřít trailer filmu ${movie.title}">
-            <div class="rating-badge">⭐ ${movie.rating}</div>
-            <img class="poster" src="${movie.image}" alt="Plakát filmu ${movie.title}">
-          </a>
-          <h2>${movie.title}</h2>
-          <div class="meta">${movie.meta}</div>
-          <div class="desc">${movie.desc}</div>
-          <div class="links">
-            <a class="link-btn" href="${movie.trailer}" target="_blank" rel="noopener noreferrer">Trailer</a>
-            <a class="link-btn" href="${movie.csfd}" target="_blank" rel="noopener noreferrer">ČSFD</a>
-          </div>
-          <button class="vote-btn" data-movie-id="${movie.id}" ${myVote ? 'disabled' : ''}>
-            ${myVote === movie.id ? '✅ Hlasováno pro tento film' : myVote ? 'Hlas už byl odeslán' : 'Hlasovat pro tento film'}
-          </button>
-        `;
-        movieGrid.appendChild(card);
-      });
-
-      document.querySelectorAll('.vote-btn').forEach(btn => {
-        if (!btn.disabled) {
-          btn.addEventListener('click', () => vote(btn.dataset.movieId));
+      const movies = [
+        {
+          id: 'mlceni',
+          title: 'Mlčení',
+          meta: 'historické drama • Martin Scorsese',
+          rating: '76 % ČSFD',
+          desc: 'Silný příběh o víře, pochybnostech, utrpení a hledání Boha v tichu i temnotě.',
+          csfd: 'https://www.csfd.cz/film/227578-mlceni/prehled/',
+          trailer: 'https://www.youtube.com/watch?v=IqrgxZLd_gE',
+          image: 'mlceni.jpg'
+        },
+        {
+          id: 'mise',
+          title: 'Mise',
+          meta: 'historické drama • Roland Joffé',
+          rating: '86 % ČSFD',
+          desc: 'Klasický film o misiích, svědomí, oběti a střetu evangelia s mocí a násilím.',
+          csfd: 'https://www.csfd.cz/film/4863-mise/prehled/',
+          trailer: 'https://www.youtube.com/watch?v=GDdU8gqQO6U',
+          image: 'mise.jpg'
+        },
+        {
+          id: 'posledni-pokuseni',
+          title: 'Poslední pokušení Krista',
+          meta: 'biblické drama • Martin Scorsese',
+          rating: '74 % ČSFD',
+          desc: 'Provokativní a hluboké zpracování Kristova lidství, pokušení a cesty k oběti.',
+          csfd: 'https://www.csfd.cz/film/8251-posledni-pokuseni-krista/prehled/',
+          trailer: 'https://www.youtube.com/watch?v=LAST_TEMPTATION_TRAILER',
+          image: 'posledni-pokuseni-krista.jpg'
         }
-      });
-    }
+      ];
 
-    async function fetchResults() {
-      const counts = Object.fromEntries(movies.map(movie => [movie.id, 0]));
-      const { data, error } = await supabase
-        .from('film_votes')
-        .select('movie_id');
+      const statusBox = document.getElementById('statusBox');
+      const movieGrid = document.getElementById('movieGrid');
+      const resultsBox = document.getElementById('resultsBox');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const resetVoteBtn = document.getElementById('resetVoteBtn');
+      let supabase = null;
 
-      if (error) throw error;
-
-      (data || []).forEach(row => {
-        if (counts[row.movie_id] !== undefined) counts[row.movie_id] += 1;
-      });
-
-      return counts;
-    }
-
-    async function renderResults() {
-      try {
-        const votes = await fetchResults();
-        const total = Object.values(votes).reduce((a, b) => a + b, 0);
-        resultsBox.innerHTML = '';
-
-        movies.forEach(movie => {
-          const count = votes[movie.id] || 0;
-          const percent = total ? Math.round((count / total) * 100) : 0;
-          const row = document.createElement('div');
-          row.className = 'result-row';
-          row.innerHTML = `
-            <div class="result-head">
-              <span>${movie.title}</span>
-              <strong>${count} hlasů • ${percent}%</strong>
-            </div>
-            <div class="bar"><span style="width:${percent}%"></span></div>
-          `;
-          resultsBox.appendChild(row);
-        });
-      } catch (error) {
-        setStatus('Nepodařilo se načíst výsledky ze Supabase: ' + error.message, 'error');
+      function setStatus(message, type = '') {
+        statusBox.textContent = message;
+        statusBox.className = 'status' + (type ? ' ' + type : '');
       }
-    }
 
-    async function vote(movieId) {
-      const myVote = getMyVote();
-      if (myVote) return;
+      function getMyVote() {
+        return localStorage.getItem(storageKey);
+      }
 
-      try {
-        setStatus('Odesílám hlas…');
-        const { error } = await supabase
-          .from('film_votes')
-          .insert({ movie_id: movieId });
+      function setMyVote(movieId) {
+        localStorage.setItem(storageKey, movieId);
+      }
 
+      function clearMyVote() {
+        localStorage.removeItem(storageKey);
+      }
+
+      function renderMovies() {
+        const myVote = getMyVote();
+        movieGrid.innerHTML = '';
+
+        movies.forEach((movie) => {
+          const card = document.createElement('article');
+          card.className = 'card';
+          card.innerHTML = `
+            <a class="poster-link" href="${movie.trailer}" target="_blank" rel="noopener noreferrer" aria-label="Otevřít trailer filmu ${movie.title}">
+              <div class="rating-badge">⭐ ${movie.rating}</div>
+              <img class="poster" src="${movie.image}" alt="Plakát filmu ${movie.title}">
+            </a>
+            <h2>${movie.title}</h2>
+            <div class="meta">${movie.meta}</div>
+            <div class="desc">${movie.desc}</div>
+            <div class="links">
+              <a class="link-btn" href="${movie.trailer}" target="_blank" rel="noopener noreferrer">Trailer</a>
+              <a class="link-btn" href="${movie.csfd}" target="_blank" rel="noopener noreferrer">ČSFD</a>
+            </div>
+            <button class="vote-btn" data-movie-id="${movie.id}" ${myVote ? 'disabled' : ''}>
+              ${myVote === movie.id ? '✅ Hlasováno pro tento film' : myVote ? 'Hlas už byl odeslán' : 'Hlasovat pro tento film'}
+            </button>
+          `;
+          movieGrid.appendChild(card);
+        });
+
+        document.querySelectorAll('.vote-btn').forEach((btn) => {
+          if (!btn.disabled) {
+            btn.addEventListener('click', () => vote(btn.dataset.movieId));
+          }
+        });
+      }
+
+      async function fetchResults() {
+        const counts = Object.fromEntries(movies.map((movie) => [movie.id, 0]));
+        const { data, error } = await supabase.from('film_votes').select('movie_id');
         if (error) throw error;
 
-        setMyVote(movieId);
+        (data || []).forEach((row) => {
+          if (counts[row.movie_id] !== undefined) counts[row.movie_id] += 1;
+        });
+
+        return counts;
+      }
+
+      async function renderResults() {
+        if (!supabase) {
+          resultsBox.innerHTML = '<div class="note">Výsledky se zobrazí po připojení k Supabase.</div>';
+          return;
+        }
+
+        try {
+          const votes = await fetchResults();
+          const total = Object.values(votes).reduce((a, b) => a + b, 0);
+          resultsBox.innerHTML = '';
+
+          movies.forEach((movie) => {
+            const count = votes[movie.id] || 0;
+            const percent = total ? Math.round((count / total) * 100) : 0;
+            const row = document.createElement('div');
+            row.className = 'result-row';
+            row.innerHTML = `
+              <div class="result-head">
+                <span>${movie.title}</span>
+                <strong>${count} hlasů • ${percent}%</strong>
+              </div>
+              <div class="bar"><span style="width:${percent}%"></span></div>
+            `;
+            resultsBox.appendChild(row);
+          });
+        } catch (error) {
+          setStatus('Nepodařilo se načíst výsledky ze Supabase: ' + error.message, 'error');
+        }
+      }
+
+      async function vote(movieId) {
+        const myVote = getMyVote();
+        if (myVote) return;
+        if (!supabase) {
+          setStatus('Nejprve doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'error');
+          return;
+        }
+
+        try {
+          setStatus('Odesílám hlas…');
+          const { error } = await supabase.from('film_votes').insert({ movie_id: movieId });
+          if (error) throw error;
+
+          setMyVote(movieId);
+          renderMovies();
+          await renderResults();
+          setStatus('Hlas byl uložen online a výsledky jsou aktualizované pro všechny.', 'ok');
+        } catch (error) {
+          setStatus('Hlas se nepodařilo uložit: ' + error.message, 'error');
+        }
+      }
+
+      function validateConfig() {
+        return !SUPABASE_URL.startsWith('DOPLN_') && !SUPABASE_ANON_KEY.startsWith('DOPLN_');
+      }
+
+      async function init() {
         renderMovies();
+        renderResults();
+
+        if (!validateConfig()) {
+          setStatus('Filmy jsou načtené. Teď doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'error');
+          return;
+        }
+
+        if (!window.supabase || !window.supabase.createClient) {
+          setStatus('Nepodařilo se načíst knihovnu Supabase.', 'error');
+          return;
+        }
+
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        setStatus('Připojeno k Supabase. Načítám výsledky…');
         await renderResults();
-        setStatus('Hlas byl uložen online a výsledky jsou aktualizované pro všechny.', 'ok');
-      } catch (error) {
-        setStatus('Hlas se nepodařilo uložit: ' + error.message, 'error');
-      }
-    }
-
-    function validateConfig() {
-      return !SUPABASE_URL.startsWith('DOPLN_') && !SUPABASE_ANON_KEY.startsWith('DOPLN_');
-    }
-
-    async function init() {
-      renderMovies();
-
-      if (!validateConfig()) {
-        setStatus('Doplň v kódu SUPABASE_URL a SUPABASE_ANON_KEY.', 'error');
-        return;
+        setStatus('Online hlasování běží. Výsledky jsou společné pro všechny.', 'ok');
       }
 
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      setStatus('Připojeno k Supabase. Načítám výsledky…');
-      await renderResults();
-      setStatus('Online hlasování běží. Výsledky jsou společné pro všechny.', 'ok');
-    }
+      refreshBtn.addEventListener('click', async () => {
+        if (!supabase) {
+          setStatus('Nejprve doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'error');
+          return;
+        }
+        setStatus('Obnovuji výsledky…');
+        await renderResults();
+        setStatus('Výsledky obnoveny.', 'ok');
+      });
 
-    refreshBtn.addEventListener('click', async () => {
-      if (!supabase) return;
-      setStatus('Obnovuji výsledky…');
-      await renderResults();
-      setStatus('Výsledky obnoveny.', 'ok');
+      resetVoteBtn.addEventListener('click', () => {
+        clearMyVote();
+        renderMovies();
+        setStatus('Místní hlas na tomto zařízení byl smazán. Databázový hlas zůstává uložený.', 'ok');
+      });
+
+      init();
     });
-
-    resetVoteBtn.addEventListener('click', () => {
-      clearMyVote();
-      renderMovies();
-      setStatus('Místní hlas na tomto zařízení byl smazán. Databázový hlas zůstává uložený.', 'ok');
-    });
-
-    init();
   </script>
 </body>
 </html>
